@@ -7,18 +7,15 @@ namespace Open_Board
     class Messageboards : GUIBuilder
     {
         public String MessageboardTitle;
-        public String Admin;
         public List<Messages> MessagesList = new List<Messages>();
 
         /// <summary>
         /// Creates a new messageboard
         /// </summary>
         /// <param name="messageboardTitle">The title of the new messageboard</param>
-        /// <param name="admin">The admin of the new messageboard</param>
-        public void createMessageboard(String messageboardTitle, String admin)
+        public void createMessageboard(String messageboardTitle)
         {
             MessageboardTitle = messageboardTitle;
-            Admin = admin;
         }
 
         /// <summary>
@@ -28,7 +25,7 @@ namespace Open_Board
         /// <param name="title">The title</param>
         /// <param name="content">The content</param>
         /// <param name="tags">The tags</param>
-        public void AddMessage(String author, String title, String content, List<String> tags)
+        public void AddMessage(Users author, String title, String content, List<String> tags)
         {
             Messages message = new Messages(author, title, content, tags);
             MessagesList.Add(message);
@@ -62,10 +59,10 @@ namespace Open_Board
                 Console.WriteLine();
             }
             
-            if(message.Author == Admin)
-                WriteColouredText(message.Author, ConsoleColor.Red, true);
+            if(message.Author.Admin)
+                WriteColouredText(message.Author.Username, ConsoleColor.Red, true);
             else
-                WriteColouredText(message.Author, ConsoleColor.Cyan, true);
+                WriteColouredText(message.Author.Username, ConsoleColor.Cyan, true);
 
             Console.WriteLine();
         }
@@ -73,7 +70,7 @@ namespace Open_Board
 
     class Messages
     {
-        public Messages(String author, String title, String content, List<String> tags)
+        public Messages(Users author, String title, String content, List<String> tags)
         {
             Author = author;
             Title = title;
@@ -81,7 +78,7 @@ namespace Open_Board
             Tags = tags;
         }
 
-        public String Author { get; set; }
+        public Users Author { get; set; }
         public String Title { get; set; }
         public String Content { get; set; }
         public List<String> Tags;

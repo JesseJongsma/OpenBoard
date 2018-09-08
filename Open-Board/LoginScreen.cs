@@ -24,7 +24,10 @@ namespace Open_Board
                 if (!CheckDuplicate(username) && username != "") // Create a new account
                 {
                     password = PromptInput("Please enter your password.");
-                    CurrentUser = new Users(username, password);
+                    if (UsersList.Count == 0)
+                        CurrentUser = new Users(username, password, true);
+                    else
+                        CurrentUser = new Users(username, password, false);
                     UsersList.Add(CurrentUser);
 
                     Console.Clear();
@@ -114,14 +117,16 @@ namespace Open_Board
 
     class Users
     {
-        public Users(String username, String password)
+        public Users(String username, String password, bool admin)
         {
             Username = username;
             Password = password;
+            Admin = admin;
         }
 
         public String Username;
         public String Password;
+        public bool Admin;
         public Messageboards messageboard { get; set; }
     }
 }

@@ -45,9 +45,14 @@ namespace Open_Board
             // Create the board
             if (!alreadyExists)
             {
-                MessageBoardList.Add(MessageBoard);
-                MessageBoard.createMessageboard(messageBoardTitle, CurrentUser.Username);
-                Console.WriteLine("==CREATED {0}==", messageBoardTitle);
+                if (CurrentUser.Admin)
+                {
+                    MessageBoardList.Add(MessageBoard);
+                    MessageBoard.createMessageboard(messageBoardTitle);
+                    Console.WriteLine("==CREATED {0}==", messageBoardTitle);
+                }
+                else
+                    Console.WriteLine("==PERMISSION DENIED==");
             }
             else
                 Console.WriteLine("=={0} ALREADY EXISTS==", messageBoardTitle);
@@ -90,7 +95,7 @@ namespace Open_Board
         {
             // Check if the user has joined a group and then add the message
             if (CurrentUser.messageboard != null)
-                CurrentUser.messageboard.AddMessage(CurrentUser.Username, title, content, tags);
+                CurrentUser.messageboard.AddMessage(CurrentUser, title, content, tags);
             else
                 WriteColouredText("Please join a board first", ConsoleColor.Red, true);
         }

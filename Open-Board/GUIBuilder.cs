@@ -36,8 +36,7 @@ namespace Open_Board
         {
             // Check if the user has joined a board
             ConsoleColor UsernameColour = ConsoleColor.Cyan; // Standard colour for the username
-            if (CurrentUser.messageboard != null)
-                UsernameColour = (CurrentUser.messageboard.Admin == CurrentUser.Username) ? ConsoleColor.Red : UsernameColour;
+            UsernameColour = (CurrentUser.Admin) ? ConsoleColor.Red : UsernameColour;
 
             LineBuilder('=', 80, true);
             Console.Write("Welcome: ");
